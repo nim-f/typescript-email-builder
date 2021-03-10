@@ -1,6 +1,6 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     mode: 'none',
@@ -24,10 +24,10 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src', 'index.html')
+            template: path.resolve(__dirname, 'src', 'index.html'),
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-        })
+        }),
     ],
-};
+}
