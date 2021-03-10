@@ -1,6 +1,9 @@
 .tools {
   width: 30%;
   background: rgb(234, 234, 234);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
 }
 
 .main {

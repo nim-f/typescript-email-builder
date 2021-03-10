@@ -5,6 +5,7 @@ export interface Box {
     type: string
     parent?: string
     id?: string
+    settings?: Record<string, unknown>
 }
 export interface BoxProps extends Box {
     toggleBlock: TToggleBlock
@@ -19,7 +20,6 @@ export interface EmailBox extends Box {
     id: string
     children: EmailBox[]
     parent: string
-    settings: Record<string, unknown>
 }
 
 export interface IRow {

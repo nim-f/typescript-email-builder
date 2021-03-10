@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { BoxProps, Box } from '../../types/box'
 
 import s from './toolblock.module.css'
+import { defaultSettings } from '../../utils/defaultSettings'
 
 export const ToolBlock: FC<BoxProps> = ({
     name,
@@ -32,7 +33,8 @@ export const ToolBlock: FC<BoxProps> = ({
                         }).map((val) => ({ ...val, id: uniqid() }))
                     toggleBlock([...cells, newBlock])
                 } else {
-                    toggleBlock([newBlock])
+                    const settings = defaultSettings[item.name]
+                    toggleBlock([{ ...newBlock, settings }])
                 }
 
                 // alert(`You dropped ${item.name} into ${dropResult.name}!`)
@@ -50,7 +52,7 @@ export const ToolBlock: FC<BoxProps> = ({
             style={{ opacity }}
             className={classNames(s.block, { [s.tool]: sidebar })}
         >
-            {name}
+            {sidebar && name}
             {children}
 
             {sidebar && type === 'row' && (

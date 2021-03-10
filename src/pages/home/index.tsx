@@ -8,6 +8,7 @@ import { ITEM_TYPES } from '../../utils/itemTypes'
 import { AppContext } from '../../context'
 
 import s from './home.module.css'
+import { INSTRUMENTS } from '../../utils/instrument'
 
 export const Home: FC = (): ReactElement => {
     return (
@@ -33,12 +34,18 @@ export const Home: FC = (): ReactElement => {
                                 type={ITEM_TYPES.row}
                                 toggleBlock={addItem}
                             />
-                            <ToolBlock
-                                sidebar={true}
-                                name={'logo'}
-                                type={ITEM_TYPES.block}
-                                toggleBlock={addItem}
-                            />
+                            <div>
+                                <div>Blocks:</div>
+                                {INSTRUMENTS.map((instrument) => (
+                                    <ToolBlock
+                                        sidebar={true}
+                                        name={instrument}
+                                        type={ITEM_TYPES.block}
+                                        toggleBlock={addItem}
+                                    />
+                                ))}
+                            </div>
+
                         </div>
                     </div>
                 )}

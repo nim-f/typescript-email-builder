@@ -5,6 +5,7 @@ import { Row } from '../row'
 import { ToolBlock } from '../toolBlock'
 import { IDndArea } from '../../types/dnd'
 import { EmailBox } from '../../types/box'
+import { Content } from '../content'
 
 export const DNDArea: FC<IDndArea> = ({
     name,
@@ -34,22 +35,26 @@ export const DNDArea: FC<IDndArea> = ({
         }),
     })
 
-    let backgroundColor = '#222'
+    let backgroundColor = '#fff'
     if (isOverCurrent || isOver) {
         backgroundColor = 'darkgreen'
     }
     return (
         <div
             style={{
+                backgroundColor,
                 minHeight: height,
                 minWidth: width,
                 border: '1px solid #ddd',
                 display: 'flex',
                 flexDirection: id === 'root' ? 'column' : 'row',
+                height: '100%',
             }}
             ref={drop}
         >
-            {isOverCurrent ? 'Release to drop' : 'Drag a box here'}
+            {!data.length &&
+                <>{ isOverCurrent ? <div>Release to drop</div> : <div>Drag a box here</div> }</>
+            }
             {data?.map((item: EmailBox) => {
                 if (item.type === 'row') {
                     return (
@@ -70,6 +75,7 @@ export const DNDArea: FC<IDndArea> = ({
                     >
                         <div style={{ border: '1px solid #000' }}>
                             block {item.name}
+                            <Content name={item.name} settings={item.settings}/>
                         </div>
                     </ToolBlock>
                 )

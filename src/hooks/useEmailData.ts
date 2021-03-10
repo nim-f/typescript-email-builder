@@ -29,6 +29,7 @@ export const useEmail = () => {
         }
     }
     const three = list_to_tree(email)
+    console.log({three})
 
     return {
         three,
