@@ -14,7 +14,6 @@ export const list_to_tree = (list: any[]) => {
 
     for (i = 0; i < list.length; i += 1) {
         node = list[i]
-        console.log({ node })
         if (node.parent !== 'root') {
             // if you have dangling branches check that map[node.parentId] exists
             // @ts-ignore

@@ -7,13 +7,15 @@ import { ToolBlock } from '../../components/toolBlock'
 import { ITEM_TYPES } from '../../utils/itemTypes'
 import { AppContext } from '../../context'
 
+import s from './home.module.css'
+
 export const Home: FC = (): ReactElement => {
     return (
-        <div>
-            <DndProvider backend={HTML5Backend}>
-                <AppContext.Consumer>
-                    {({ three, addItem, changeItem }) => (
-                        <div style={{ display: 'flex' }}>
+        <DndProvider backend={HTML5Backend}>
+            <AppContext.Consumer>
+                {({ three, addItem, changeItem }) => (
+                    <div className={s.main}>
+                        <div className={s.email}>
                             <DNDArea
                                 name={'root'}
                                 height={600}
@@ -22,22 +24,25 @@ export const Home: FC = (): ReactElement => {
                                 id={'root'}
                                 changeItem={changeItem}
                             />
-                            <div>
-                                <ToolBlock
-                                    name={'row'}
-                                    type={ITEM_TYPES.row}
-                                    toggleBlock={addItem}
-                                />
-                                <ToolBlock
-                                    name={'logo'}
-                                    type={ITEM_TYPES.block}
-                                    toggleBlock={addItem}
-                                />
-                            </div>
                         </div>
-                    )}
-                </AppContext.Consumer>
-            </DndProvider>
-        </div>
+
+                        <div className={s.tools}>
+                            <ToolBlock
+                                sidebar={true}
+                                name={'row'}
+                                type={ITEM_TYPES.row}
+                                toggleBlock={addItem}
+                            />
+                            <ToolBlock
+                                sidebar={true}
+                                name={'logo'}
+                                type={ITEM_TYPES.block}
+                                toggleBlock={addItem}
+                            />
+                        </div>
+                    </div>
+                )}
+            </AppContext.Consumer>
+        </DndProvider>
     )
 }

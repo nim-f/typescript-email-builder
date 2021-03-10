@@ -4,17 +4,32 @@ import { Box } from '../types/box'
 
 export const useEmail = () => {
     const [email, setEmail] = useState<Box[]>([])
-    const addItem = (row: Box) => {
-        setEmail([...email, row])
+    const addItem = (item: Box | Box[]) => {
+        if (Array.isArray(item)) {
+            setEmail([...email, ...item])
+        } else {
+            setEmail([...email, item])
+        }
     }
-    const changeItem = (item: Box) => {
-        const newEmail = [
-            ...email.filter((oldItem) => oldItem.id !== item.id),
-            item,
-        ]
-        setEmail(newEmail)
+
+    const changeItem = (item: Box | Box[]) => {
+        if (Array.isArray(item)) {
+            const itemsIds = item.map((val) => val.id)
+            const newEmail = [
+                ...email.filter((oldItem) => itemsIds.indexOf(oldItem.id) === -1),
+                ...item,
+            ]
+            setEmail(newEmail)
+        } else {
+            const newEmail = [
+                ...email.filter((oldItem) => oldItem.id !== item.id),
+                item,
+            ]
+            setEmail(newEmail)
+        }
     }
     const three = list_to_tree(email)
+
     return {
         three,
         changeItem,

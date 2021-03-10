@@ -1,18 +1,18 @@
 import React from 'react'
-import { Box } from '../types/box'
+import { Box, TToggleBlock } from '../types/box'
 
 interface ContextProps {
     three: any[]
-    addItem: (row: Box) => void
-    changeItem: (item: Box) => void
+    addItem: TToggleBlock
+    changeItem: TToggleBlock
 }
 
 const defaultProps: ContextProps = {
     three: [],
-    addItem: (row: Box) => {
-        console.log(row)
+    addItem: (item: Box | Box[]) => {
+        console.log(item)
     },
-    changeItem: (item: Box) => {
+    changeItem: (item: Box | Box[]) => {
         console.log(item)
     },
 }

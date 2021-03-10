@@ -4,6 +4,7 @@ import { ITEM_TYPES } from '../../utils/itemTypes'
 import { Row } from '../row'
 import { ToolBlock } from '../toolBlock'
 import { IDndArea } from '../../types/dnd'
+import { EmailBox } from '../../types/box'
 
 export const DNDArea: FC<IDndArea> = ({
     name,
@@ -49,28 +50,23 @@ export const DNDArea: FC<IDndArea> = ({
             ref={drop}
         >
             {isOverCurrent ? 'Release to drop' : 'Drag a box here'}
-            {data?.map((item: any) => {
+            {data?.map((item: EmailBox) => {
                 if (item.type === 'row') {
                     return (
                         <ToolBlock
-                            id={item.id}
-                            name={'row'}
-                            type={ITEM_TYPES.row}
+                            {...item}
                             toggleBlock={changeItem}
                         >
                             <Row
-                                length={item.length}
-                                id={item.id}
-                                data={item.children}
+                                {...item}
                             />
                         </ToolBlock>
                     )
                 }
                 return (
                     <ToolBlock
-                        type={ITEM_TYPES.block}
-                        toggleBlock={changeItem}
                         {...item}
+                        toggleBlock={changeItem}
                     >
                         <div style={{ border: '1px solid #000' }}>
                             block {item.name}

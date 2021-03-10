@@ -1,4 +1,4 @@
-import { Box } from './box'
+import { Box, TToggleBlock } from './box'
 
 export interface IDndArea {
     name: string
@@ -6,5 +6,5 @@ export interface IDndArea {
     width: number
     id: string
     data: any
-    changeItem: (item: Box) => void
+    changeItem: TToggleBlock
 }

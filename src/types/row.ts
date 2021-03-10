@@ -1,11 +1,8 @@
-export interface IRow {
-    id: string
-    length: number
-    data?: [] | null
-}
+import { EmailBox } from './box'
+
 export interface ITreeRow {
-    id: string
+    id?: string
     length: number
-    children?: [] | null
+    children?: EmailBox[] | null
     parent: string
 }
