@@ -1,4 +1,4 @@
-import React, { FC, CSSProperties, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 import uniqid from 'uniqid'
 import classNames from 'classnames'
