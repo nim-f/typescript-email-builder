@@ -1,8 +1,7 @@
 import { EmailBox } from './box'
+import { defaultSettings } from './defaultSettings'
 
-export interface ITreeRow {
-    id?: string
-    length: number
-    children?: EmailBox[] | null
-    parent: string
+export interface IRow extends Omit<EmailBox, 'settings'> {
+    settings: typeof defaultSettings.row
 }
+

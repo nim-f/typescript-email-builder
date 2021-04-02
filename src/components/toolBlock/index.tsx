@@ -6,40 +6,52 @@ import classNames from 'classnames'
 import { BoxProps, Box } from '../../types/box'
 
 import s from './toolblock.module.css'
-import { defaultSettings } from '../../utils/defaultSettings'
+import { defaultSettings, SettingsPropertiesType } from '../../types/defaultSettings'
 
 export const ToolBlock: FC<BoxProps> = ({
     name,
     type,
-    children,
-    id,
     toggleBlock,
-    sidebar,
 }) => {
     const [cellsLength, setCellsLength] = useState(3)
-    const [{ isDragging }, drag] = useDrag({
-        item: { name, type, id },
-        end: (item: Box | undefined, monitor: DragSourceMonitor) => {
-            const dropResult = monitor.getDropResult()
-            if (item && dropResult) {
-                const id = item.id || uniqid()
-                const newBlock = { ...item, parent: dropResult.id, id }
 
-                if (type === 'row') {
-                    const cells = Array(cellsLength)
-                        .fill({
-                            parent: id,
-                            type: 'row',
-                        }).map((val) => ({ ...val, id: uniqid() }))
-                    toggleBlock([...cells, newBlock])
-                } else {
-                    const settings = defaultSettings[item.name]
-                    toggleBlock([{ ...newBlock, settings }])
-                }
-
-                // alert(`You dropped ${item.name} into ${dropResult.name}!`)
+    const onEndDrag = (item: Box | undefined, monitor: DragSourceMonitor) => {
+        const dropResult = monitor.getDropResult()
+        if (item && dropResult) {
+            const id = uniqid()
+            const newBlock = {
+                ...item,
+                parent: dropResult.id,
+                id,
+                settings: {
+                    ...defaultSettings.row,
+                    cellsLength,
+                },
             }
-        },
+
+            if (type === 'row') {
+                const cells = Array(cellsLength)
+                    .fill({
+                        parent: id,
+                        type: 'row',
+                    })
+                    .map((val) => ({
+                        ...val,
+                        id: uniqid(),
+                    }))
+                toggleBlock([...cells, newBlock])
+            } else {
+                const settings = defaultSettings[item.name as keyof typeof defaultSettings]
+                toggleBlock([{ ...newBlock, settings, items: [] }])
+            }
+
+            // alert(`You dropped ${item.name} into ${dropResult.name}!`)
+        }
+    }
+
+    const [{ isDragging }, drag] = useDrag({
+        item: { name, type },
+        end: onEndDrag,
         collect: (monitor: any) => ({
             isDragging: monitor.isDragging(),
         }),
@@ -50,17 +62,24 @@ export const ToolBlock: FC<BoxProps> = ({
         <div
             ref={drag}
             style={{ opacity }}
-            className={classNames(s.block, { [s.tool]: sidebar })}
+            className={classNames(s.block, { [s.tool]: true })}
         >
-            {sidebar && name}
-            {children}
-
-            {sidebar && type === 'row' && (
+            {name}
+            {type === 'row' && (
                 <div>
-                    <label>Cells: <input type="number" value={cellsLength} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        const val = e.target.value
-                        setCellsLength(parseInt(val))
-                    }} /></label>
+                    <label>
+                        Cells:
+                        <input
+                            type="number"
+                            value={cellsLength}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                                const val = e.target.value
+                                setCellsLength(parseInt(val))
+                            }}
+                        />
+                    </label>
                     <button>edit</button>
                 </div>
             )}

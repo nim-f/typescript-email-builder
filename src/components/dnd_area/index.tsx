@@ -1,11 +1,13 @@
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
 import { useDrop } from 'react-dnd'
 import { ITEM_TYPES } from '../../utils/itemTypes'
 import { Row } from '../row'
-import { ToolBlock } from '../toolBlock'
+import { TableBlock } from '../tableBlock'
 import { IDndArea } from '../../types/dnd'
 import { EmailBox } from '../../types/box'
 import { Content } from '../content'
+import s from './dndarea.module.css'
+import { AppContext } from '../../context'
 
 export const DNDArea: FC<IDndArea> = ({
     name,
@@ -13,8 +15,8 @@ export const DNDArea: FC<IDndArea> = ({
     width,
     id,
     data,
-    changeItem,
 }) => {
+    const { changeItem } = useContext(AppContext)
     const [{ isOver, isOverCurrent }, drop] = useDrop({
         accept:
             id === 'root'
@@ -41,14 +43,11 @@ export const DNDArea: FC<IDndArea> = ({
     }
     return (
         <div
+            className={s.dndarea}
             style={{
                 backgroundColor,
                 minHeight: height,
                 minWidth: width,
-                border: '1px solid #ddd',
-                display: 'flex',
-                flexDirection: id === 'root' ? 'column' : 'row',
-                height: '100%',
             }}
             ref={drop}
         >
@@ -58,26 +57,26 @@ export const DNDArea: FC<IDndArea> = ({
             {data?.map((item: EmailBox) => {
                 if (item.type === 'row') {
                     return (
-                        <ToolBlock
+                        <TableBlock
                             {...item}
-                            toggleBlock={changeItem}
+                            changeBlock={changeItem}
                         >
                             <Row
                                 {...item}
                             />
-                        </ToolBlock>
+                        </TableBlock>
                     )
                 }
                 return (
-                    <ToolBlock
+                    <TableBlock
                         {...item}
-                        toggleBlock={changeItem}
+                        changeBlock={changeItem}
                     >
-                        <div style={{ border: '1px solid #000' }}>
+                        <div style={{ border: '1px solid #000', width: '100%' }}>
                             block {item.name}
                             <Content name={item.name} settings={item.settings}/>
                         </div>
-                    </ToolBlock>
+                    </TableBlock>
                 )
             })}
         </div>

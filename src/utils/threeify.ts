@@ -1,4 +1,3 @@
-import { ITreeRow } from '../types/row'
 
 export const list_to_tree = (list: any[]) => {
     let map = {},
@@ -9,7 +8,7 @@ export const list_to_tree = (list: any[]) => {
     for (i = 0; i < list.length; i += 1) {
         // @ts-ignore
         map[list[i].id] = i // initialize the map
-        list[i].children = [] // initialize the children
+        list[i].items = [] // initialize the children
     }
 
     for (i = 0; i < list.length; i += 1) {
@@ -17,7 +16,7 @@ export const list_to_tree = (list: any[]) => {
         if (node.parent !== 'root') {
             // if you have dangling branches check that map[node.parentId] exists
             // @ts-ignore
-            list[map[node.parent]] && list[map[node.parent]].children.push(node)
+            list[map[node.parent]] && list[map[node.parent]].items.push(node)
         } else {
             roots.push(node)
         }

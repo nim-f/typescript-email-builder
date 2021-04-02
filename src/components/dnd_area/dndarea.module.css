@@ -1,0 +1,7 @@
+.dndarea {
+
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

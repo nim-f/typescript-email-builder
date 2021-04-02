@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
-import { IText } from '../../../types/text'
+import { defaultSettings } from 'src/types/defaultSettings'
 
-export const TextBlock: FC<IText> = ({ text, fontSize }) => {
-    return <p style={{ fontSize }}>{text}</p>
+type TText = typeof defaultSettings.text
+
+export const TextBlock: FC<TText> = ({ text, contentStyle }) => {
+    return <p style={contentStyle}>{text}</p>
 }

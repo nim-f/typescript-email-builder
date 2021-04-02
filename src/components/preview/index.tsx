@@ -2,21 +2,22 @@ import React, {FC} from 'react'
 import { EmailBox } from '../../types/box'
 import { Content } from '../content'
 
-export const Preview: FC<{tree: EmailBox[]}> = ({tree}) => {
-
+export const Preview: FC<{
+    tree: EmailBox[]
+    settings: Record<string, any>
+}> = ({ tree, settings }) => {
     const renderTree = (tree: EmailBox[]) => {
         return (
-
             <>
-                {tree.map((block:EmailBox) => {
+                {tree.map((block: EmailBox) => {
                     if (block.type === 'row') {
                         return (
                             <table>
                                 <tr>
-                                    {block.children.map((cell:EmailBox) => {
+                                    {block.items.map((cell: EmailBox) => {
                                         return (
                                             <td>
-                                                {renderTree(cell.children)}
+                                                {renderTree(cell.items)}
                                             </td>
                                         )
                                     })}
@@ -34,7 +35,7 @@ export const Preview: FC<{tree: EmailBox[]}> = ({tree}) => {
     }
     return (
         <div>
-            <table>
+            <table style={{ width: settings.width }}>
                 <tbody>
                     <tr>
                         <td>

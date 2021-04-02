@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import { IImage } from '../../../types/image'
+import { defaultSettings } from 'src/types/defaultSettings'
+type TImage = typeof defaultSettings.logo
 
-export const ImageBlock: FC<IImage> = ({ url, alt, width, height }) => {
-    return <img src={url} alt={alt} width={width} height={height} />
+export const ImageBlock: FC<TImage> = ({ url, alt, contentStyle }) => {
+    return <img src={url} alt={alt} style={contentStyle} />
 }

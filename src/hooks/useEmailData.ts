@@ -1,10 +1,22 @@
 import React, { useState } from 'react'
 import { list_to_tree } from '../utils/threeify'
-import { Box } from '../types/box'
+import { EmailBox, GBlockChange } from '../types/box'
+import { Settings, TEditSettings } from '../types/settings'
 
 export const useEmail = () => {
-    const [email, setEmail] = useState<Box[]>([])
-    const addItem = (item: Box | Box[]) => {
+    const [email, setEmail] = useState<EmailBox[]>([])
+
+    const editSettings: TEditSettings = (id, settings) => {
+        const newEmail = email.map((item) => {
+            if (item.id === id) {
+                return { ...item, settings }
+            }
+            return item
+        })
+        setEmail(newEmail)
+    }
+
+    const addItem: GBlockChange<EmailBox> = (item) => {
         if (Array.isArray(item)) {
             setEmail([...email, ...item])
         } else {
@@ -12,7 +24,7 @@ export const useEmail = () => {
         }
     }
 
-    const changeItem = (item: Box | Box[]) => {
+    const changeItem: GBlockChange<EmailBox> = (item) => {
         if (Array.isArray(item)) {
             const itemsIds = item.map((val) => val.id)
             const newEmail = [
@@ -35,5 +47,6 @@ export const useEmail = () => {
         three,
         changeItem,
         addItem,
+        editSettings,
     }
 }
