@@ -14,7 +14,6 @@ export const SettingsPopup: FC<SettingsProps> = ({
 }) => {
     if (!isOpen) return null
     const { editSettings, changeRowLength } = useEmailContext();
-    console.log({settings})
 
     const { blockStyle, contentStyle, cellsLength, ...rest } = settings
 
@@ -38,8 +37,10 @@ export const SettingsPopup: FC<SettingsProps> = ({
     const popup = (
         <div className={s.popup}>
             <button onClick={() => setIsOpen(false)}>close</button>
+            <p>Amount of cells</p>
             {cellsLength &&
                 <input
+                    min={1}
                     type="number"
                     value={cellsLength}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
