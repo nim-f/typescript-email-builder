@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import { defaultSettings } from 'src/types/defaultSettings'
-type TImage = typeof defaultSettings.logo
+import { SETTINGS, BLOCK_NAMES } from 'src/constants'
+
+type TImage = typeof SETTINGS[BLOCK_NAMES.logo]
 
 export const ImageBlock: FC<TImage> = ({ url, alt, contentStyle }) => {
     return <img src={url} alt={alt} style={contentStyle} />

@@ -1,10 +1,10 @@
 import React, { FC, useContext } from 'react'
 import ReactDOM from 'react-dom'
-import { AppContext } from '../../context'
-import { SettingsProps } from '../../types/settings'
+import { SettingsProps } from 'src/types/settings'
 
 import s from './settings.module.css'
 import { settingsToArray } from 'src/utils/settingsHelper'
+import { useEmailContext } from '../../../hooks/useEmailContext'
 
 export const SettingsPopup: FC<SettingsProps> = ({
     id,
@@ -13,9 +13,10 @@ export const SettingsPopup: FC<SettingsProps> = ({
     setIsOpen,
 }) => {
     if (!isOpen) return null
-    const { editSettings } = useContext(AppContext);
+    const { editSettings, changeRowLength } = useEmailContext();
+    console.log({settings})
 
-    const { blockStyle, contentStyle, ...rest } = settings
+    const { blockStyle, contentStyle, cellsLength, ...rest } = settings
 
     const renderSettingsFields = (el: { [key: string]: string | number }) => {
         const { name, value } = el
@@ -37,6 +38,16 @@ export const SettingsPopup: FC<SettingsProps> = ({
     const popup = (
         <div className={s.popup}>
             <button onClick={() => setIsOpen(false)}>close</button>
+            {cellsLength &&
+                <input
+                    type="number"
+                    value={cellsLength}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const val: number = parseInt(e.target.value)
+                        changeRowLength(id, val)
+                    }}
+                />
+            }
             <p>Settings</p>
             {settingsToArray(rest).map(renderSettingsFields)}
             <p>Block styles </p>

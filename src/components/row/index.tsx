@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react'
-import { DNDArea } from '../dnd_area'
+import React, { FC } from 'react'
+import { DNDArea } from '../ui/dnd_area'
 import s from './row.module.css'
-import { EmailBox } from '../../types/box'
+import { EmailBox } from 'src/types'
 
 export const Row: FC<EmailBox> = ({ items }) => {
     return (

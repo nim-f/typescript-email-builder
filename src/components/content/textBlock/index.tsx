@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import { defaultSettings } from 'src/types/defaultSettings'
+import { SETTINGS } from 'src/constants'
 
-type TText = typeof defaultSettings.text
+type TText = typeof SETTINGS.text
 
 export const TextBlock: FC<TText> = ({ text, contentStyle }) => {
     return <p style={contentStyle}>{text}</p>

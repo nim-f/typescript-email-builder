@@ -2,10 +2,12 @@ import React, { FC, useState } from 'react'
 import { useDrag, DragSourceMonitor } from 'react-dnd'
 import classNames from 'classnames'
 
-import { EmailBox, EmailBoxProps } from '../../types/box'
+import { EmailBox, EmailBoxProps } from 'src/types'
 
 import s from './tableblock.module.css'
-import { SettingsPopup } from '../settings/popup'
+
+import { SettingsPopup } from 'src/components/ui'
+import { useEmailContext } from 'src/hooks/useEmailContext'
 
 export const TableBlock: FC<EmailBoxProps> = ({
     name,
@@ -14,10 +16,10 @@ export const TableBlock: FC<EmailBoxProps> = ({
     items,
     parent,
     id,
-    changeBlock,
     settings,
 }) => {
     const [isSettingsOpen, setSettingsOpen] = useState(false)
+    const { deleteItems, changeItem } = useEmailContext()
 
     const onEndDrag = (
         item: EmailBox | undefined,
@@ -30,7 +32,7 @@ export const TableBlock: FC<EmailBoxProps> = ({
                 parent: dropResult.id,
             }
 
-            changeBlock([newBlock])
+            changeItem([newBlock])
             // alert(`You dropped ${item.name} into ${dropResult.name}!`)
         }
     }
@@ -51,6 +53,7 @@ export const TableBlock: FC<EmailBoxProps> = ({
             className={classNames(s.block)}
         >
             <button onClick={() => setSettingsOpen(true)}>settings</button>
+            <button onClick={() => deleteItems([id])}>delete</button>
 
             {children}
 

@@ -1,9 +1,10 @@
+import { EmailBox } from '../types/box'
 
-export const list_to_tree = (list: any[]) => {
-    let map = {},
-        node,
-        roots = [],
-        i
+export const list_to_tree = (list: EmailBox[]): EmailBox[] => {
+    const map = {},
+          roots = []
+
+    let node, i
 
     for (i = 0; i < list.length; i += 1) {
         // @ts-ignore
@@ -21,5 +22,6 @@ export const list_to_tree = (list: any[]) => {
             roots.push(node)
         }
     }
+    console.log('three')
     return roots
 }

@@ -1,13 +1,14 @@
-import React, { FC, useContext } from 'react'
+import React, { FC } from 'react'
 import { useDrop } from 'react-dnd'
-import { ITEM_TYPES } from '../../utils/itemTypes'
-import { Row } from '../row'
-import { TableBlock } from '../tableBlock'
-import { IDndArea } from '../../types/dnd'
-import { EmailBox } from '../../types/box'
-import { Content } from '../content'
+
+import { IDndArea, EmailBox } from 'src/types'
+import { BLOCK_TYPES } from 'src/constants'
+
+import { Row } from 'src/components/row'
+import { TableBlock } from 'src/components/ui'
+import { Content } from 'src/components/content'
+
 import s from './dndarea.module.css'
-import { AppContext } from '../../context'
 
 export const DNDArea: FC<IDndArea> = ({
     name,
@@ -16,12 +17,11 @@ export const DNDArea: FC<IDndArea> = ({
     id,
     data,
 }) => {
-    const { changeItem } = useContext(AppContext)
     const [{ isOver, isOverCurrent }, drop] = useDrop({
         accept:
             id === 'root'
-                ? [ITEM_TYPES.row]
-                : [ITEM_TYPES.row, ITEM_TYPES.block],
+                ? [BLOCK_TYPES.Row]
+                : [BLOCK_TYPES.Row, BLOCK_TYPES.Block],
 
         drop(item, monitor) {
             const didDrop = monitor.didDrop()
@@ -57,25 +57,14 @@ export const DNDArea: FC<IDndArea> = ({
             {data?.map((item: EmailBox) => {
                 if (item.type === 'row') {
                     return (
-                        <TableBlock
-                            {...item}
-                            changeBlock={changeItem}
-                        >
-                            <Row
-                                {...item}
-                            />
+                        <TableBlock {...item}>
+                            <Row {...item} />
                         </TableBlock>
                     )
                 }
                 return (
-                    <TableBlock
-                        {...item}
-                        changeBlock={changeItem}
-                    >
-                        <div style={{ border: '1px solid #000', width: '100%' }}>
-                            block {item.name}
-                            <Content name={item.name} settings={item.settings}/>
-                        </div>
+                    <TableBlock {...item}>
+                        <Content {...item} />
                     </TableBlock>
                 )
             })}

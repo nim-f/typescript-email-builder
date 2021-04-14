@@ -1,11 +1,11 @@
-import React, {FC} from 'react'
-import { EmailBox } from '../../types/box'
-import { Content } from '../content'
+import React, { FC } from 'react'
+import { EmailBox } from 'src/types/box'
+import { Content } from 'src/components/content'
 
 export const Preview: FC<{
     tree: EmailBox[]
     settings: Record<string, any>
-}> = ({ tree, settings }) => {
+}> = ({ settings, tree }) => {
     const renderTree = (tree: EmailBox[]) => {
         return (
             <>
@@ -35,6 +35,8 @@ export const Preview: FC<{
     }
     return (
         <div>
+            <h4>Preview</h4>
+
             <table style={{ width: settings.width }}>
                 <tbody>
                     <tr>
