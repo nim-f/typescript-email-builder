@@ -32,7 +32,7 @@ export const TableBlock: FC<EmailBoxProps> = ({
                 parent: dropResult.id,
             }
 
-            changeItem([newBlock])
+            changeItem(newBlock)
             // alert(`You dropped ${item.name} into ${dropResult.name}!`)
         }
     }
